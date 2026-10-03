@@ -44,8 +44,6 @@ Press `Esc`, then type:
 :wq!
 ```
 
-`:wq` writes the file and quits. (`:wq!` forces it, which is only needed for read-only files.)
-
 ### 3. Make it executable
 
 ```bash

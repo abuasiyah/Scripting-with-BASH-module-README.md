@@ -72,37 +72,54 @@ This gives the file permission to run as a program.
 | `add=$((num1 + num2))` | Bash arithmetic with `$(( ))`. Stores the sum in `add`. |
 | `min=$((num1 - num2))` | Stores the difference in `min`. |
 | `mul=$((num1 * num2))` | Stores the product in `mul`. |
-| `div=$((num1 / num2))` | Stores the quotient in `div`. |
 | `echo "Addition = ..."` | Prints the addition, subtraction and multiplication results. Double quotes let `$` variables expand. |
 | `if [ $num1 -eq 0 ]` | Checks if the first number equals 0. If so, prints an error and exits with `exit 1`. |
 | `elif [ $num2 -eq 0 ]` | Checks if the second number equals 0. If so, prints an error and exits with `exit 1`. |
-| `echo "Division = ..."` | Prints the division result if neither check triggered. |
+| `div=$((num1 / num2))` | Stores the quotient in `div`. This line comes **after** the zero checks, so Bash never tries to divide by 0. |
+| `echo "Division = ..."` | Prints the division result. |
+
+## Bug I fixed
+
+My first version had `div=$((num1 / num2))` near the top of the script, before the `if` check. Running `./calculator.sh 10 0` made Bash print its own error first:
+
+```
+./calculator.sh: line 10: num1 / num2: division by 0 (error token is "num2")
+```
+
+Moving the division line below the `if` / `elif` check means it only runs when `num2` is not 0, so only my own error message is shown.
 
 ## Full script
 
 ```bash
 #!/bin/bash
+
+
 num1="$1"
 num2="$2"
+
 add=$((num1 + num2))
 min=$((num1 - num2))
 mul=$((num1 * num2))
-div=$((num1 / num2))
+
+
 echo "Addition = $1 + $2 = $add"
 echo "Subtraction = $1 - $2 = $min"
 echo "Multiplication = $1 * $2 = $mul"
+
 if
-[ $num1 -eq 0 ] ; then
-echo "Error: division reult is equal to 0"
-exit 1
+	[ $num1  -eq 0 ] ; then
+	echo "Error: division reult is equal to 0"
+	exit 1
 elif
-[ $num2 -eq 0 ] ; then
-echo "Error: division reult is equal to 0"
-exit 1
+	[ $num2  -eq 0 ] ; then
+	echo "Error: division reult is equal to 0"
+	exit 1
 fi
+
+div=$((num1 / num2))
 echo "Division = $1 / $2 = $div"
 ```
 
 ## Concepts practiced
 
-Shebang, command-line arguments (`$1`, `$2`), variables, arithmetic expansion, `if` / `elif` conditions, exit codes, `chmod`.
+Shebang, command-line arguments (`$1`, `$2`), variables, arithmetic expansion, `if` / `elif` conditions, exit codes, order of execution, `chmod`.

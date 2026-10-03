@@ -41,7 +41,7 @@ Press `i` to enter insert mode, then type the script (see the full script below)
 Press `Esc`, then type:
 
 ```
-:wq
+:wq!
 ```
 
 `:wq` writes the file and quits. (`:wq!` forces it, which is only needed for read-only files.)

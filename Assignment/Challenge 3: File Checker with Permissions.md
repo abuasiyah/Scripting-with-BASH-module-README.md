@@ -105,7 +105,7 @@ Press `i`, then type or paste the full script below.
 Press `Esc`, then type:
 
 ```
-:wq
+:wq!
 ```
 
 **4. Make it executable**

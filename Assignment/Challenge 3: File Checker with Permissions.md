@@ -163,21 +163,21 @@ An existing file that is readable but not writable or executable:
 
 ```
 Enter filename to check:
-/etc/passwd
-File /etc/passwd exists
+code.sh
+File code.sh exists
 ✓ File is readable
-✗ File is not writable
-✗ File is not executable
+✓ File is writable
+✓ File is executable
 ```
 
 A file that is also executable:
 
 ```
 Enter filename to check:
-/bin/ls
-File /bin/ls exists
+math.sh
+File math.sh exists
 ✓ File is readable
-✗ File is not writable
+✓ File is writable
 ✓ File is executable
 ```
 
@@ -185,8 +185,8 @@ A file that does not exist:
 
 ```
 Enter filename to check:
-/etc/nope
-File '/etc/nope' does not exist.
+fake_file.sh
+File 'fake_file.sh' does not exist.
 ```
 
 ## Notes

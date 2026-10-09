@@ -117,7 +117,7 @@ Press `i`, then type or paste the full script below.
 Press `Esc`, then type:
 
 ```
-:wq
+:wq!
 ```
 
 **4. Make it executable**
@@ -176,12 +176,33 @@ Backup complete! Files backed up: 3
 
 The new `2026-10-09_06-39` folder contains `ideas.txt`, `notes.txt` and `todo.txt`. The `.md` file is not copied, and the original files stay where they were.
 
+### Output from my machine
+
+This is my real run in the terminal:
+
+```
+$ ./Backup.sh
+Enter source directory:
+home/sadak
+Backup directory created: 2026-10-05_15-40
+Backup complete! Files backed up: 0
+```
+
+The backup folder was created, but `0` files were backed up. I typed `home/sadak` without the leading `/`, so Bash looked for a folder called `home` **inside the directory I ran the script from**, instead of the real `/home/sadak`. Use the full path to fix it:
+
+```
+Enter source directory:
+/home/sadak
+```
+
+A path starting with `/` is absolute and works from anywhere. A path without it is relative to where you are. (Typing `~` at a `read` prompt does not expand to your home folder either, so use `/home/<username>`.)
+
 ## Notes
 
 - The backup folder is created in the directory you run the script from. The name depends on when you run it.
 - The timestamp only goes down to the minute. Running the script twice in the same minute reuses the same folder, and files with the same name are overwritten.
 - Only `.txt` files directly inside the source folder are copied, not those in subfolders.
-- The script doesn't check that the source directory exists. A mistyped name gives `Files backed up: 0` instead of an error.
+- The script doesn't check that the source directory exists. A mistyped name, like `home/sadak` above, gives `Files backed up: 0` instead of an error.
 - To match the challenge's example folder name, use `backup_dir="backup_$timestamp"`.
 
 ## Bugs I fixed along the way
